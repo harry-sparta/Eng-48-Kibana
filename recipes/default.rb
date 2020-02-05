@@ -27,7 +27,7 @@ bash 'kibana -ruby' do
   code <<-EOH
   sudo apt-get install ruby -y
   sudo gem install package pleaserun
-  sudo pleaserun -p systemd -v default /opt/kibana/bin/kibana -p 5601 -H 0.0.0.0 -e http://localhost:9200
+  sudo pleaserun -p systemd -v default /opt/kibana/bin/kibana -p 5601 -H 34.241.99.167 -e http://34.251.127.228:9200
   EOH
 end
 
@@ -37,7 +37,6 @@ end
 
 template '/opt/kibana/config/kibana.yml' do
   source 'kibana.yml.erb'
-  notifies :restart, 'service[kibana]'
 end
 
 service 'kibana' do
@@ -45,5 +44,5 @@ service 'kibana' do
 end
 
 service 'kibana' do
-  action :restart
+  action :start
 end
