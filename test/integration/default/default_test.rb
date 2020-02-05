@@ -10,7 +10,17 @@ unless os.windows?
   end
 end
 
-# This is an example test, replace it with your own test.
-describe port(80), :skip do
-  it { should_not be_listening }
+describe port(5601) do
+ it { should be_listening }
+end
+
+describe package("kibana") do
+  it { should be_installed }
+  its('version') { should match /6.8\./  }
+end
+
+# service enable
+describe service "kibana" do
+  it { should be_enabled }
+  it { should be_running }
 end
