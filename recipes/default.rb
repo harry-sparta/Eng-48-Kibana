@@ -23,26 +23,10 @@ execute 'move' do
   action :run
 end
 
-bash 'kibana -ruby' do
-  code <<-EOH
-  sudo apt-get install ruby -y
-  sudo gem install package pleaserun
-  sudo pleaserun -p systemd -v default /opt/kibana/bin/kibana -p 5601 -H 34.241.99.167 -e http://34.251.127.228:9200
-  EOH
-end
-
 remote_file '/opt/kibana/config/kibana.yml' do
   action :delete
 end
 
 template '/opt/kibana/config/kibana.yml' do
   source 'kibana.yml.erb'
-end
-
-service 'kibana' do
-  action :enable
-end
-
-service 'kibana' do
-  action :start
 end
