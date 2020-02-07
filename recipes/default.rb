@@ -30,3 +30,19 @@ end
 template '/opt/kibana/config/kibana.yml' do
   source 'kibana.yml.erb'
 end
+
+bash 'kibana -ruby' do
+  code <<-EOH
+  sudo apt-get install ruby -y
+  sudo gem install package pleaserun
+  sudo pleaserun -p systemd -v default /opt/kibana/bin/kibana -p 5601 -H 34.241.99.167 -e http://54.171.108.175:9200
+  EOH
+end
+
+service 'kibana' do
+  action :enable
+end
+
+service 'kibana' do
+  action :start
+end
